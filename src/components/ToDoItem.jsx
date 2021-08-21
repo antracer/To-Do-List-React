@@ -1,19 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 
 function ToDoItem(props) {
-  const [isClicked, setClick] = useState(false);
-
-  function handleClickLi() {
-    setClick(true);
-  }
-
   return (
-    <li
-      style={isClicked ? { textDecoration: "line-through" } : null}
-      onClick={handleClickLi}
-    >
-      {props.item}
-    </li>
+    <div
+    /*
+      onClick={props.onChecked(props.id)}
+      срабатывает мгновенно, не взирая на 
+      событие клика, а стрелочная нет - она
+      ждет, пока ее время наступит
+    */
+      onClick={() => {
+        props.onChecked(props.id);
+      }}
+    
+      <li>{props.text}</li>
+    </div>
   );
 }
 

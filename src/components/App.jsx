@@ -2,20 +2,31 @@ import React, { useState } from "react";
 import ToDoItem from "./ToDoItem";
 
 function App() {
-const [name, setName] = useState(""); // 2 useState, ибо нужно триггерить кнопку и инпут
-  const [newItems, setItems] = useState([]);
+  const [inputText, setInputText] = useState("");
+  const [items, setItems] = useState([]);
 
   function handleChange(event) {
-    const value = event.target.value;
-    setName(value);
+    const newValue = event.target.value;
+    setInputText(newValue);
   }
 
-  function handleClick() {
-    setItems((prevValue) => {
-      return [...prevValue, name];
+  function addItem() {
+    setItems(prevItems => {
+      return [...prevItems, inputText];
     });
-
-    setName("");
+    setInputText("");
+  }
+  /* Когда мы нажимаем Add, inputText 
+    становится prevItems
+  */
+  function deleteItem(id) {
+    setItems(prevItems => {
+      return prevItems.filter((item, index) => {
+        return index !== id; // параметр 
+        // фильтрации - замена предыдущего массива
+        // на новый, с этим фильтром
+      });
+    });
   }
 
   return (
@@ -24,15 +35,20 @@ const [name, setName] = useState(""); // 2 useState, ибо нужно триг�
         <h1>To-Do List</h1>
       </div>
       <div className="form">
-        <input type="text" value={name} onChange={handleChange} />
-        <button onClick={handleClick}>
+        <input onChange={handleChange} type="text" value={inputText} />
+        <button onClick={addItem}>
           <span>Add</span>
         </button>
       </div>
       <div>
         <ul>
-          {newItems.map((item) => (
-            <ToDoItem key={item.id} arr={newItems} item={item} />
+          {items.map((todoItem, index) => (
+            <ToDoItem
+              key={index}
+              id={index}
+              text={todoItem}
+              onChecked={deleteItem}
+            />
           ))}
         </ul>
       </div>
