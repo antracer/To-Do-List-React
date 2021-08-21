@@ -5,7 +5,7 @@ function InputArea(props) {
 
   function handleChange(event) {
     const newValue = event.target.value;
-    setInputText(newValue);
+    setInputText(newValue); // вот отсюда берет
   }
 
   return (
@@ -13,7 +13,7 @@ function InputArea(props) {
       <input onChange={handleChange} type="text" value={inputText} />
       <button
         onClick={() => {
-          props.onAdd(inputText);
+          props.addItem(inputText);
           setInputText("");
         }}
       >
