@@ -1,30 +1,20 @@
 import React, { useState } from "react";
 import ToDoItem from "./ToDoItem";
+import InputArea from "./InputArea";
 
 function App() {
-  const [inputText, setInputText] = useState("");
   const [items, setItems] = useState([]);
 
-  function handleChange(event) {
-    const newValue = event.target.value;
-    setInputText(newValue);
-  }
-
-  function addItem() {
-    setItems(prevItems => {
+  function addItem(inputText) {
+    setItems((prevItems) => {
       return [...prevItems, inputText];
     });
-    setInputText("");
   }
-  /* Когда мы нажимаем Add, inputText 
-    становится prevItems
-  */
+
   function deleteItem(id) {
-    setItems(prevItems => {
+    setItems((prevItems) => {
       return prevItems.filter((item, index) => {
-        return index !== id; // параметр 
-        // фильтрации - замена предыдущего массива
-        // на новый, с этим фильтром
+        return index !== id;
       });
     });
   }
@@ -34,12 +24,7 @@ function App() {
       <div className="heading">
         <h1>To-Do List</h1>
       </div>
-      <div className="form">
-        <input onChange={handleChange} type="text" value={inputText} />
-        <button onClick={addItem}>
-          <span>Add</span>
-        </button>
-      </div>
+      <InputArea addItem={addItem} /> 
       <div>
         <ul>
           {items.map((todoItem, index) => (

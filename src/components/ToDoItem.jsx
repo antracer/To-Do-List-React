@@ -11,7 +11,7 @@ function ToDoItem(props) {
     */
       onClick={() => {
         props.onChecked(props.id);
-      }}
+      }}>
     
       <li>{props.text}</li>
     </div>
